@@ -7,6 +7,6 @@ print "Loaded Ising summary statistic"
 ising_theta_hat = ising_ass.predict(ising_data)
 print "Predicted theta hats"
 ising_theta_strs = open("data/ising-10000","r").readlines()
-ising_theta = np.array([float(x.split()[1]) for x in ising_theta_strs])
+ising_theta = np.array([float(x.split()[0]) for x in ising_theta_strs])
 print "Loaded true thetas"
 np.save("theta_vs_thetahat",np.vstack((ising_theta,ising_theta_hat)))
