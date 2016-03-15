@@ -2,8 +2,8 @@ import caffe
 import numpy as np
 import argparse
 
-caffe.set_device(0)
 caffe.set_mode_gpu()
+caffe.set_device(1)
 
 parser = argparse.ArgumentParser(description='Train a net')
 parser.add_argument('solver', help='Solver prototxt.')

@@ -1,0 +1,153 @@
+name: "Isingnet"
+layer {
+  type: 'Python'
+  name: 'ising_data'
+  top: 'data'
+  top: 'theta'
+  python_param {
+    module: 'ising_data_layer'
+    layer: 'IsingDataLayer'
+    param_str: '{ "batch_size":64, "beta":0.4406, "lattice_size":10, "gibbs_steps":10000}'
+  }
+}
+layer {
+  bottom: "data"
+  top: "fc1"
+  name: "fc1"
+  type: "InnerProduct"
+  inner_product_param {
+    num_output: 500
+    weight_filler {
+      type: "gaussian"
+      std: 0.1
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+      }
+  }
+}
+layer {
+    bottom: "fc1"
+    top: "fc1"
+    name: "bn_fc1"
+    type: "BatchNorm"
+    batch_norm_param {
+        use_global_stats: false
+    }
+}
+layer {
+    bottom: "fc1"
+    top: "fc1"
+    name: "scale_fc1"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+  bottom: "fc1"
+  top: "fc1"
+  name: "relu1"
+  type: "ReLU"
+}
+layer {
+  bottom: "fc1"
+  top: "fc2"
+  name: "fc2"
+  type: "InnerProduct"
+  inner_product_param {
+    num_output: 200
+    weight_filler {
+      type: "gaussian"
+      std: 0.1
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+      }
+  }
+}
+layer {
+    bottom: "fc2"
+    top: "fc2"
+    name: "bn_fc2"
+    type: "BatchNorm"
+    batch_norm_param {
+        use_global_stats: false
+    }
+}
+layer {
+    bottom: "fc2"
+    top: "fc2"
+    name: "scale_fc2"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+  bottom: "fc2"
+  top: "fc2"
+  name: "relu2"
+  type: "ReLU"
+}
+layer {
+  bottom: "fc2"
+  top: "fc3"
+  name: "fc3"
+  type: "InnerProduct"
+  inner_product_param {
+    num_output: 100
+    weight_filler {
+      type: "gaussian"
+      std: 0.1
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+      }
+  }
+}
+layer {
+    bottom: "fc3"
+    top: "fc3"
+    name: "bn_fc3"
+    type: "BatchNorm"
+    batch_norm_param {
+        use_global_stats: false
+    }
+}
+layer {
+    bottom: "fc3"
+    top: "fc3"
+    name: "scale_fc3"
+    type: "Scale"
+    scale_param {
+        bias_term: true
+    }
+}
+layer {
+  bottom: "fc3"
+  top: "fc4"
+  name: "fc4"
+  type: "InnerProduct"
+  inner_product_param {
+    num_output: 1
+    weight_filler {
+      type: "gaussian"
+      std: 0.1
+    }
+    bias_filler {
+        type: "constant"
+        value: 0
+      }
+  }
+}
+layer {
+  name: "loss"
+  type: "EuclideanLoss"
+  bottom: "fc4"
+  bottom: "theta"
+  top: "loss"
+}

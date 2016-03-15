@@ -32,8 +32,9 @@ def MA_gen_theta():
 Simulates a batch of thetas
 '''
 def MA_gen_thetas(B):
-    thetas = np.ndarray([B, 2])
-    for i in range(0,B):
+    thetas = np.ndarray([B, 2]) 
+    thetas[0] = [0.6, 0.2] 
+    for i in range(1,B):
         thetas[i] = MA_gen_theta()
     return thetas
 
@@ -102,7 +103,6 @@ if __name__ == '__main__':
     mc_steps = int(sys.argv[3])
     param_filename = sys.argv[4]
     data_filename = sys.argv[5]
-
     thetas = MA_gen_thetas(n)
     X = MA_gen_batch(n, thetas, seq_length)
     AC = [MA_autocov(x) for x in X]

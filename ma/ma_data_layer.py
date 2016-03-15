@@ -1,4 +1,4 @@
-
+import caffe
 import numpy as np
 import json
 
@@ -6,15 +6,15 @@ class MADataLayer(caffe.Layer):
   def gen_ma(self, theta, n):
     q = len(theta)
     Z = np.random.normal(0,1,n+q)
-    theta = theta.tolist()
-    theta.append(1)
-    X = [np.dot(Z[i:i+q+1], theta) for i in range(0,n)]
+    theta_rev = list(theta[::-1])
+    theta_rev.append(1)
+    X = [np.dot(Z[i:i+q+1], theta_rev) for i in range(0,n)]
     return X
 
   def gen_ma_theta(self):
     theta1 = np.random.uniform(-2, 2, 1);
     theta2 = np.random.uniform(max(-theta1-1, theta1-1), 1)
-    return [theta2, theta1]
+    return [theta1, theta2]
 
   def gen_ma_thetas(self, B):
     thetas = np.ndarray([B, 2])

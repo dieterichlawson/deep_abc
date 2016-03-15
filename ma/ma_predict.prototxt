@@ -8,7 +8,7 @@ layer {
       dim: 64
       dim: 1
       dim: 1
-      dim: 1000
+      dim: 100
     }
   }
 }

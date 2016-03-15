@@ -1,0 +1,13 @@
+net: "ising_fc_train.prototxt"
+test_iter: 0
+test_interval:256
+type: "Adam"
+base_lr: 0.001
+lr_policy: "step"
+gamma: 0.5
+stepsize: 100
+display: 4
+max_iter: 100000
+momentum: 0.9
+snapshot: 100
+snapshot_prefix: "ising_snapshots/ising_fc"
